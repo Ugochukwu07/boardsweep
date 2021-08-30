@@ -1,6 +1,6 @@
 <?php
     #payment
-    if (isset($_GET['pay'])) {
+    if (isset($_GET['payment'])) {
 
         $curl = curl_init();
         $customer_email = 'ekwuemeugochukwu83@gmail.com';
@@ -84,11 +84,11 @@
             // please check other things like whether you already gave value for this ref
             // if the email matches the customer who owns the product etc
             //Give Value and return to Success page
-            header('location: https://storelad.com/payment/flutterwave/index.php?state=success');
+            header('location: https://storelad.com/payment/flutterwave/index.php?success');
             exit();
         } else {
             //Dont Give Value and return to Failure page
-            header('location: https://storelad.com/payment/flutterwave/index.php?state=fail');
+            header('location: https://storelad.com/payment/flutterwave/index.php?fail');
             exit();
         }
     }
@@ -103,7 +103,7 @@
     <title>Flutterwave</title>
     <link rel="stylesheet" href="https://cdn.usebootstrap.com/bootstrap/latest/css/bootstrap.min.css">
 </head>
-<body>
+<body style="background-color: #eeeeee;">
     <div class="container text-center">
         <div class="row" style="height: 100vh;">
             <?php if(isset($_GET['fail'])):?>
