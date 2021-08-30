@@ -8,7 +8,7 @@
         $currency = "NGN";
         $txref = "rave-" . 'qwertyuipkols1283jdjj'; // ensure you generate unique references per transaction.
         $PBFPubKey = "FLWPUBK_TEST-bfcc7bab9ee0e9b198dd37e6cfd0f5e2-X"; // get your public key from the dashboard.
-        $redirect_url = 'https://storelad.com/payment/flutterwave/';
+        $redirect_url = 'https://storelad.com/payment/flutterwave/?txref';
 
         curl_setopt_array($curl, array(
         CURLOPT_URL => "https://api.ravepay.co/flwv3-pug/getpaidx/api/v2/hosted/pay",
