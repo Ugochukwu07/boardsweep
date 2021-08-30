@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GPay</title>
+    <link rel="stylesheet" href="https://cdn.usebootstrap.com/bootstrap/latest/css/bootstrap.min.css">
+    <script>
+        
+ /** Launches payment request flow when user taps on buy button. */
+function onBuyClicked() {
+  if (!window.PaymentRequest) {
+    console.log('Web payments are not supported in this browser.');
+    return;
+  }
+
+  // Create supported payment method.
+  const supportedInstruments = [
+    {
+      supportedMethods: ['https://tez.google.com/pay'],
+      data: {
+        pa: 'merchant-vpa@xxx',
+        pn: 'Merchant Name',
+        tr: '1234ABCD',  // Your custom transaction reference ID
+        url: 'https://url/of/the/order/in/your/website',
+        mc: '1234', //Your merchant category code
+        tn: 'Purchase in Merchant',
+      },
+    }
+  ];
+
+  // Create order detail data.
+  const details = {
+    total: {
+      label: 'Total',
+      amount: {
+        currency: 'INR',
+        value: '10.01', // sample amount
+      },
+    },
+    displayItems: [{
+      label: 'Original Amount',
+      amount: {
+        currency: 'INR',
+        value: '10.01',
+      },
+    }],
+  };
+
+  // Create payment request object.
+  let request = null;
+  try {
+    request = new PaymentRequest(supportedInstruments, details);
+  } catch (e) {
+    console.log('Payment Request Error: ' + e.message);
+    return;
+  }
+  if (!request) {
+    console.log('Web payments are not supported in this browser.');
+    return;
+  }
+
+  var canMakePaymentPromise = checkCanMakePayment(request);
+  canMakePaymentPromise
+      .then((result) => {
+        showPaymentUI(request, result);
+      })
+      .catch((err) => {
+        console.log('Error calling checkCanMakePayment: ' + err);
+      });
+}
+
+
+/**
+* Show the payment request UI.
+*
+* @private
+* @param {PaymentRequest} request The payment request object.
+* @param {Promise} canMakePayment The promise for whether can make payment.
+*/
+function showPaymentUI(request, canMakePayment) {
+ if (!canMakePayment) {
+   handleNotReadyToPay();
+   return;
+ }
+
+ // Set payment timeout.
+ let paymentTimeout = window.setTimeout(function() {
+   window.clearTimeout(paymentTimeout);
+   request.abort()
+       .then(function() {
+         console.log('Payment timed out after 20 minutes.');
+       })
+       .catch(function() {
+         console.log('Unable to abort, user is in the process of paying.');
+       });
+ }, 20 * 60 * 1000); /* 20 minutes */
+
+ request.show()
+     .then(function(instrument) {
+
+       window.clearTimeout(paymentTimeout);
+       processResponse(instrument); // Handle response from browser.
+     })
+     .catch(function(err) {
+       console.log(err);
+     });
+}
+
+// Global key for canMakepayment cache.
+const canMakePaymentCache = 'canMakePaymentCache';
+
+/**
+ * Check whether can make payment with Google Pay or not. It will check session storage
+ * cache first and use the cache directly if it exists. Otherwise, it will call
+ * canMakePayment method from PaymentRequest object and return the result, the
+ * result will also be stored in the session storage cache for future usage.
+ *
+ * @private
+ * @param {PaymentRequest} request The payment request object.
+ * @return {Promise} a promise containing the result of whether can make payment.
+ */
+function checkCanMakePayment(request) {
+  // Check canMakePayment cache, use cache result directly if it exists.
+  if (sessionStorage.hasOwnProperty(canMakePaymentCache)) {
+    return Promise.resolve(JSON.parse(sessionStorage[canMakePaymentCache]));
+  }
+
+  // If canMakePayment() isn't available, default to assume the method is
+  // supported.
+  var canMakePaymentPromise = Promise.resolve(true);
+
+  // Feature detect canMakePayment().
+  if (request.canMakePayment) {
+    canMakePaymentPromise = request.canMakePayment();
+  }
+
+  return canMakePaymentPromise
+      .then((result) => {
+        // Store the result in cache for future usage.
+        sessionStorage[canMakePaymentCache] = result;
+        return result;
+      })
+      .catch((err) => {
+        console.log('Error calling canMakePayment: ' + err);
+      });
+}
+    </script>
+</head>
+<body style="background-color: #eeeeee;">
+    <div class="container text-center">
+        <div class="row" style="height: 100vh;">
+            <!-- 
+                    <?php if(isset($_GET['fail'])):?> <
+                    div class = "col-md-4 col-12 mx-auto my-auto" >
+                    <
+                    a href = "?payment"
+                class = "btn btn-info" > Pay NGN 10, 0000 < /a><br> <
+                    small class = "text-danger" > * Payment Failed < /small><br> <
+                    small class = "text-danger" > * Pay with Flutter Wave Secured Payment system < /small> <
+                    /div>
+                <?php elseif(isset($_GET['success'])):?> <
+                div class = "col-md-4 col-12 mx-auto my-auto" >
+                    <
+                    a href = "?payment"
+                class = "btn btn-success" > Pay Again < /a><br> <
+                    small class = "text-success" > * Payment Success < /small><br> <
+                    small class = "text-success" > * Pay with Flutter Wave Secured Payment system < /small> <
+                    /div>
+                <?php else:?>
+             -->
+            <div class="col-md-4 col-12 mx-auto my-auto">
+                <a href="?payment" class="btn btn-info"> Pay NGN 10, 0000</a><br>
+                <small class="text-warning"> * Pay with G_Pay Sercured Payment system</small>
+            </div>
+            <!-- <?php endif;?> -->
+        </div>
+    </div>
+                                            <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous">
+                                                </script>
+                                                <script async="async" src='https://cdn.usebootstrap.com/bootstrap/latest/js/bootstrap.min.js'></script>
+                                                <script async="async" src='https://cdn.usebootstrap.com/bootstrap/latest/js/bootstrap.bundle.min.js'></script>
+                                                </body>
+
+</html>

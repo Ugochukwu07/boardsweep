@@ -6,8 +6,8 @@
         $customer_email = 'ekwuemeugochukwu83@gmail.com';
         $amount = '10000';  
         $currency = "NGN";
-        $txref = "rave-" . 'qwertyuipkols1283jdjj'; // ensure you generate unique references per transaction.
-        $PBFPubKey = "FLWPUBK_TEST-bfcc7bab9ee0e9b198dd37e6cfd0f5e2-X"; // get your public key from the dashboard.
+        $txref = "rave-" . bin2hex(time()); // ensure you generate unique references per transaction.
+        $PBFPubKey = "FLWPUBK-9de0785d520c4849b81f21e1c32ffc28-X"; // get your public key from the dashboard.
         $redirect_url = 'https://storelad.com/payment/flutterwave/?txref';
 
         curl_setopt_array($curl, array(
@@ -51,7 +51,7 @@
         $currency = "NGN"; //Correct Currency from Server
 
         $query = array(
-            "SECKEY" => "FLWSECK_TEST-599fa8447d9978fd92d2f1f8fd95a618-X",
+            "SECKEY" => "FLWSECK-e351ac7c21cee96cf945c0261c06f585-X",
             "txref" => $ref
         );
 
