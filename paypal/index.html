@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]>      <html class="no-js"> <!--<![endif]-->
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title></title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="">
+</head>
+
+<body>
+    <script src="https://www.paypal.com/sdk/js?client-id=ARotwUjYsxE_p5thYRMkHAkVJzakNyb0pcPUQodLip8MPb2EjeRxOIRnL73KYQzkGj3qnCFRd2HcSuoB&disable-funding=credit,card">
+        // Required. Replace YOUR_CLIENT_ID with your sandbox client ID.
+    </script>
+
+    <div id="paypal-button-container"></div>
+    <script>
+        paypal.Buttons({
+            style: {
+                color: 'blue',
+                shape: 'pill'
+            },
+            createOrder: function(data, actions) {
+                // This function sets up the details of the transaction, including the amount and line item details.
+                return actions.order.create({
+                    purchase_units: [{
+                        amount: {
+                            value: '100.00'
+                        }
+                    }]
+                });
+            },
+            onApprove: function(data, actions) {
+                // This function captures the funds from the transaction.
+                return actions.order.capture().then(function(details) {
+                    // This function shows a transaction success message to your buyer.
+                    window.location.replace("https://storelad.com/payments/paypal/success.html")
+                        //alert('Transaction completed by ' + details.payer.name.given_name);
+                });
+            },
+            onCancel: function(data) {
+                window.location.replace("https://storelad.com/payments/paypal/fail.html")
+            }
+        }).render('#paypal-button-container');
+        //This function displays Smart Payment Buttons on your web page.
+    </script>
+</body>
+
+</html>
