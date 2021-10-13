@@ -11,15 +11,26 @@
     <title></title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="">
+    <link rel="stylesheet" href="https://cdn.usebootstrap.com/bootstrap/latest/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" integrity="sha512-1PKOgIY59xJ8Co8+NE6FZ+LOAZKjy+KY8iq0G4B3CyeY6wYHN3yt9PW0XpSriVlkMXe40PTKnXrLnZ9+fkDaog==" crossorigin="anonymous" />
+
 </head>
 
 <body>
     <script src="https://www.paypal.com/sdk/js?client-id=ARotwUjYsxE_p5thYRMkHAkVJzakNyb0pcPUQodLip8MPb2EjeRxOIRnL73KYQzkGj3qnCFRd2HcSuoB&disable-funding=credit,card">
         // Required. Replace YOUR_CLIENT_ID with your sandbox client ID.
     </script>
+    <main class="container">
+        <div class="row text-center" style="height: 100vh;">
+            <div class="col-12 my-auto">
+                <div id="paypal-button-container"></div>
+            </div>
+        </div>
+    </main>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <script async="async" src='https://cdn.usebootstrap.com/bootstrap/latest/js/bootstrap.min.js'></script>
+    <script async="async" src='https://cdn.usebootstrap.com/bootstrap/latest/js/bootstrap.bundle.min.js'></script>
 
-    <div id="paypal-button-container"></div>
     <script>
         paypal.Buttons({
             style: {

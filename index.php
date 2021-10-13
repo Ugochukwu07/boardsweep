@@ -13,6 +13,9 @@
                 <div class="col-md-4 col-12 mx-auto my-auto">
                     <a href="flutterwave/"class="btn btn-info">Pay with Flutter Wave</a>
                 </div>
+                <div class="col-md-4 col-12 mx-auto my-auto">
+                    <a href="paypal/"class="btn btn-warning">Pay with PayPal</a>
+                </div>
         </div>
     </div>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
