@@ -29,11 +29,11 @@ class GetOrder
     $response = $client->execute(new OrdersGetRequest($orderId));
 
     //get transaction details
-    dd($response);
+    //dd($response);
     $orderID = $response->result->id;
     $email = $response->result->payer->email_address;
     $name = $response->result->purchase_units[0]->shipping->name->full_name;
-    $address = $response->result->purchase_units[0]->address->address_line_1;
+    $address = $response->result->purchase_units[0]->shipping->address->address_line_1;
     
     //insert data to database
     require('database/db.php');
