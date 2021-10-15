@@ -17,13 +17,24 @@
 </head>
 
 <body>
-    <script src="https://www.paypal.com/sdk/js?client-id=ARotwUjYsxE_p5thYRMkHAkVJzakNyb0pcPUQodLip8MPb2EjeRxOIRnL73KYQzkGj3qnCFRd2HcSuoB&disable-funding=credit,card">
+    <script src="https://www.paypal.com/sdk/js?client-id=ARotwUjYsxE_p5thYRMkHAkVJzakNyb0pcPUQodLip8MPb2EjeRxOIRnL73KYQzkGj3qnCFRd2HcSuoB">
         // Required. Replace YOUR_CLIENT_ID with your sandbox client ID.
     </script>
     <main class="container">
-        <div class="row text-center" style="height: 100vh;">
-            <div class="col-12 my-auto">
-                <div id="paypal-button-container"></div>
+        <div class="row text-center">
+            <div class="col-12 col-md-6 mx-auto">
+                <div class="card">
+                    <img class="card-img-top img-fluid" src="https://picsum.photos/200" alt="">
+                    <div class="card-body">
+                        <h4 class="card-title" id="itemName">Item</h4>
+                        <p id="itemId" class="d-none">12</p>
+                        <p class="card-text">Pay for the item</p>
+                        <p>$<span class="price" id="price">47.99</span></p>
+                    </div>
+                    <div class="card-footer text-muted">
+                        <div id="paypal-button-container"></div>
+                    </div>
+                </div>
             </div>
         </div>
     </main>
@@ -32,6 +43,11 @@
     <script async="async" src='https://cdn.usebootstrap.com/bootstrap/latest/js/bootstrap.bundle.min.js'></script>
 
     <script>
+        var item = {
+            'name': $('#itemName').html(),
+            'id': $('#itemId').html(),
+            'price': $('#price').html()
+        };
         paypal.Buttons({
             style: {
                 color: 'blue',
@@ -42,17 +58,18 @@
                 return actions.order.create({
                     purchase_units: [{
                         amount: {
-                            value: '100.00'
+                            value: item.price
                         }
                     }]
                 });
             },
             onApprove: function(data, actions) {
                 // This function captures the funds from the transaction.
-                return actions.order.capture().then(function(details) {
+                return actions.order.capture().then(function() {
                     // This function shows a transaction success message to your buyer.
-                    window.location.replace("https://storelad.com/payment/paypal/success.html")
+                    window.location.replace("https://storelad.com/payment/paypal/success.php?&orderId=" + data.orderID)
                         //alert('Transaction completed by ' + details.payer.name.given_name);
+                        //console.log(data)
                 });
             },
             onCancel: function(data) {
