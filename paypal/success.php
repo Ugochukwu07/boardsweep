@@ -38,7 +38,7 @@ class GetOrder
     //insert data to database
     require('database/db.php');
 
-    $customer = create('customer_details', ['email' => $email, 'orderID' => $orderID, 'address' => $address]);
+    $customer = create('customer_details', ['email' => $email, 'orderID' => $orderID, 'address' => $address, 'name' => $name]);
     if($customer){
         header('loaction: succ.php');
     }
