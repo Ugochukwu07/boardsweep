@@ -16,5 +16,7 @@ if($LOCAL){
     define('DB_PASS', '');
     define('DB_NAME', 'payment');
 }else{
-    include('../path.php');
+    define('DB_USER', 'storelad_newshoura');
+    define('DB_PASS', 'rEhtoM14m7y');
+    define('DB_NAME', 'storelad_newshour');
 }
