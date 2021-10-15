@@ -8,7 +8,7 @@ use Sample\PayPalClient;
 use PayPalCheckoutSdk\Orders\OrdersGetRequest;
 
 require('payment.php');
-$orderID = $_GET['orderid'];
+$orderID = $_GET['orderId'];
 
 class GetOrder
 {
@@ -28,7 +28,7 @@ class GetOrder
     $orderID = $response->result->id;
     $email = $response->result->payer->email_address;
     $name = $response->result->purchase_units[0]->shipping->name->full_name;
-    $address = $response->result->purchase_units[0]->address;
+    $address = $response->result->purchase_units[0]->address->address_line_1;
     
     //insert data to database
     require('database/db.php');

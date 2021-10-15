@@ -10,8 +10,8 @@ $url.= $_SERVER['HTTP_HOST'];
 $LOCAL = strpos($url, 'localhost') ? 1 : 0;
 
 define('ROOT_PATH', realpath(dirname(__FILE__)));
-if($LOCAL){
     define('HOST', 'localhost');
+if($LOCAL){
     define('DB_USER', 'root');
     define('DB_PASS', '');
     define('DB_NAME', 'payment');
