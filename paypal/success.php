@@ -9,6 +9,10 @@ use PayPalCheckoutSdk\Orders\OrdersGetRequest;
 
 require('payment.php');
 $orderID = $_GET['orderId'];
+function dd($value) { // to be deleted
+    echo "<pre>", print_r($value, true), "</pre>";
+    die();
+}
 
 class GetOrder
 {
@@ -25,6 +29,7 @@ class GetOrder
     $response = $client->execute(new OrdersGetRequest($orderId));
 
     //get transaction details
+    dd($response);
     $orderID = $response->result->id;
     $email = $response->result->payer->email_address;
     $name = $response->result->purchase_units[0]->shipping->name->full_name;
