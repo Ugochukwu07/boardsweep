@@ -8,7 +8,7 @@ use Sample\PayPalClient;
 use PayPalCheckoutSdk\Orders\OrdersGetRequest;
 
 require('payment.php');
-$orderID = $_GET['orderID'];
+$orderID = $_GET['orderid'];
 
 class GetOrder
 {
